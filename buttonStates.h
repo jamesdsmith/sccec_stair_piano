@@ -14,8 +14,27 @@
  *        functions have an inverted effect (Pressed happens when pin state = LOW). Analog
  *        requires a trigger threshold, when the analogPin reads above this trigger level,
  *        the button will trigger.
+ * 
+ * example:
+ *   #include "buttonStates.h"
+ *   int buttonPin = 2;
+ *   struct buttonState button;
+ * 
+ *   void setup()
+ *   {
+ *     pinMode( buttonPin, INPUT );
+ *   }
+ * 
+ *   void loop()
+ *   {
+ *     updateDigitalButton( &button, buttonPin );
+ *     if( button.Pressed )
+ *     {
+ *       ...
+ *     }
+ *   }
  */
-
+ 
 typedef struct buttonState
 {
   bool Pressed;
