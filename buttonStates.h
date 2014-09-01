@@ -1,6 +1,21 @@
 #ifndef _BUTTONSTATES_H_
 #define _BUTTONSTATES_H_
 
+/*
+ * ButtonState Library
+ * 
+ * author: James Smith, codefiend@gmail.com
+ * 
+ * description: This library contains a very simple state machine to be used with button-like
+ *              inputs for Arduino projects.
+ * 
+ * usage: Declare a buttonState structure in your code and pass it to the desired update
+ *        function. Digital reads from digital pins, Analog reads from analog pins. The Inv
+ *        functions have an inverted effect (Pressed happens when pin state = LOW). Analog
+ *        requires a trigger threshold, when the analogPin reads above this trigger level,
+ *        the button will trigger.
+ */
+
 typedef struct buttonState
 {
   bool Pressed;

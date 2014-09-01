@@ -11,7 +11,6 @@
 
 const int buttonPin1 = 4;
 const int buttonPin2 = 9;
-
 const int analogPin1 = 2;
 const int IRpin = 6;
 
@@ -33,7 +32,7 @@ void setup()
   pinMode( buttonPin2, INPUT );
   pinMode( analogPin1, INPUT );
   pinMode( IRpin, INPUT );
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 void loop()
@@ -53,6 +52,6 @@ void loop()
   if( button2.Pressed )
   {
     startPlayback( d_data, d_length, 1 );
-    Serial.println("Pressed 2");
+    //Serial.println("Pressed 2");
   }
 }
