@@ -15,6 +15,15 @@
  *        requires a trigger threshold, when the analogPin reads above this trigger level,
  *        the button will trigger.
  * 
+ *        updateDigitalButton    - Digital input activated when closing a circuit
+ *        updateInvDigitalButton - Digital input activated when opening a circuit
+ *        updateAnalogButton     - Analog input activated when analog source >= threshold
+ *        updateInvAnalogButton  - Analog input activated when analog source <= threshold
+ * 
+ *        All functions take the address of a buttonState structure as their first argument,
+ *        and a pin to test as their second argument. The analog functions take a threshold
+ *        as their third argument.
+ * 
  * example:
  *   #include "buttonStates.h"
  *   int buttonPin = 2;
