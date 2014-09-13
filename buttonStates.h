@@ -43,19 +43,24 @@
  *     }
  *   }
  */
- 
+
+/* Buttons will be locked out from triggering for this many milliseconds after a trigger */
+const unsigned long bounceLock = 50;
+
 typedef struct buttonState
 {
   bool Pressed;
   bool Held;
+  unsigned long lastTime;
 };
 
 void updateDigitalButton( struct buttonState* state, int buttonPin )
 {
   int pinState = digitalRead( buttonPin );
-  if( state->Pressed == false && state->Held == false && pinState == HIGH )
+  if( state->Pressed == false && state->Held == false && pinState == HIGH && (millis() - state->lastTime) > bounceLock  )
   {
     state->Pressed = true;
+    state->lastTime = millis();
   }
   else if( state->Pressed == true && state->Held == false && pinState == HIGH )
   {
@@ -72,7 +77,7 @@ void updateDigitalButton( struct buttonState* state, int buttonPin )
 void updateInvDigitalButton( struct buttonState* state, int buttonPin )
 {
   int pinState = digitalRead( buttonPin );
-  if( state->Pressed == false && state->Held == false && pinState == LOW )
+  if( state->Pressed == false && state->Held == false && pinState == LOW && (millis() - state->lastTime) > bounceLock )
   {
     state->Pressed = true;
   }
@@ -91,7 +96,7 @@ void updateInvDigitalButton( struct buttonState* state, int buttonPin )
 void updateAnalogButton( struct buttonState* state, int buttonPin, int threshold )
 {
   int pinState = analogRead( buttonPin );
-  if( state->Pressed == false && state->Held == false && pinState >= threshold )
+  if( state->Pressed == false && state->Held == false && pinState >= threshold && (millis() - state->lastTime) > bounceLock )
   {
     state->Pressed = true;
   }
@@ -110,7 +115,7 @@ void updateAnalogButton( struct buttonState* state, int buttonPin, int threshold
 void updateInvAnalogButton( struct buttonState* state, int buttonPin, int threshold )
 {
   int pinState = analogRead( buttonPin );
-  if( state->Pressed == false && state->Held == false && pinState <= threshold )
+  if( state->Pressed == false && state->Held == false && pinState <= threshold && (millis() - state->lastTime) > bounceLock )
   {
     state->Pressed = true;
   }
