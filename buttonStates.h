@@ -45,7 +45,7 @@
  */
 
 /* Buttons will be locked out from triggering for this many milliseconds after a trigger */
-const unsigned long bounceLock = 50;
+const unsigned long bounceLock = 100;
 
 typedef struct buttonState
 {
