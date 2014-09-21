@@ -72,7 +72,7 @@ int main( int argc, char* args[] )
 	}
 	if( ioctl( i2c, I2C_SLAVE, I2C_ADDRESS ) < 0 )
 	{
-		printf( "Error opening a bus to I2C device\n", I2C_ADDRESS );
+		printf( "Error opening a bus to I2C device\n" );
 		exit(1);
 	}
 	if( !initSDL() )
@@ -104,10 +104,14 @@ int main( int argc, char* args[] )
 	{
 		if( read( i2c, data, 1 ) == 1 )
 		{
-			if( data[0] >= 1 && data[0] <= 8 )
+			char state = data[0];
+			for( int i = 0; i < 8; ++i )
 			{
-				//printf( "Received %u\n", data[0] );
-				playSound( data[0]-1 );
+				if( state & 0x01 )
+				{
+					playSound( i );
+				}
+				state = state >> 1;
 			}
 		}
 		usleep( i2c_poll_delay );
