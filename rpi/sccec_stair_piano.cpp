@@ -64,17 +64,15 @@ int main( int argc, char* args[] )
 	// Initialization
 	signal( SIGINT, handleSigInt );
 
-	printf( "I2C: Connecting\n" );
 	int i2c;
 	if( (i2c = open( DEVICE_NAME, O_RDWR )) < 0 )
 	{
-		printf( "I2C: Failed to access %d\n", DEVICE_NAME );
+		printf( "Error connecting to I2C device: %d\n", DEVICE_NAME );
 		exit(1);
 	}
-	printf("I2C: acquiring buss to 0x%x\n", I2C_ADDRESS);
 	if( ioctl( i2c, I2C_SLAVE, I2C_ADDRESS ) < 0 )
 	{
-		printf( "I2C: Failed to acquire bus access/talk to slave 0x%x\n", I2C_ADDRESS );
+		printf( "Error opening a bus to I2C device\n", I2C_ADDRESS );
 		exit(1);
 	}
 	if( !initSDL() )
@@ -83,8 +81,8 @@ int main( int argc, char* args[] )
 	}
 
 	// Load sound files
-	sounds[0] = Mix_LoadWAV( "/home/pi/Projects/stair_piano/sounds/a.wav" );
-	sounds[1] = Mix_LoadWAV( "/home/pi/Projects/stair_piano/sounds/b.wav" );
+	sounds[0] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/a.wav" );
+	sounds[1] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/b.wav" );
 
 	for( int i = 0; i < SOUNDS; ++i )
 	{
