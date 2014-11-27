@@ -24,34 +24,31 @@
 // The Arduino is setup to be a slave to the RPi
 #define SLAVE_ADDRESS 0x04
 
-const int buttonPin1 = 4;
-const int buttonPin2 = 9;
-/*
-const int buttonPin3 = 5;
-const int buttonPin4 = 6;
-const int buttonPin5 = 7;
-const int buttonPin6 = 8;
-const int buttonPin7 = 10;
-const int buttonPin8 = 11;
-*/
-const int analogPin1 = 2;
+const int analogPin1 = 0;
+const int analogPin2 = 1;
+const int analogPin3 = 2;
+const int analogPin4 = 3;
+const int analogPin5 = 4;
+const int analogPin6 = 5;
+const int analogPin7 = 6;
+const int analogPin8 = 7;
 
 #include "buttonStates.h"
-struct buttonState button1;
-struct buttonState button2;
-/*
-struct buttonState button3;
-struct buttonState button4;
-struct buttonState button5;
-struct buttonState button6;
-struct buttonState button7;
-struct buttonState button8;
-*/
 struct buttonState analog1;
+struct buttonState analog2;
+struct buttonState analog3;
+struct buttonState analog4;
+struct buttonState analog5;
+struct buttonState analog6;
+struct buttonState analog7;
+struct buttonState analog8;
 
 // each bit in this byte will hold the key state for exactly one button, until that state data
 // is transferred to the RPi over I2C
 byte keyState = 0;
+
+// analog trigger threshold. This is dependent on the ambient light
+int threshold = 700;
 
 #define NOTE_1 0x01
 #define NOTE_2 0x02
@@ -64,19 +61,16 @@ byte keyState = 0;
 
 void setup()
 {
-  //Serial.begin(9600);
-  pinMode( buttonPin1, INPUT );
-  pinMode( buttonPin2, INPUT );
-/*
-  pinMode( buttonPin3, INPUT );
-  pinMode( buttonPin4, INPUT );
-  pinMode( buttonPin5, INPUT );
-  pinMode( buttonPin6, INPUT );
-  pinMode( buttonPin7, INPUT );
-  pinMode( buttonPin8, INPUT );
-*/
+  Serial.begin(9600);
   pinMode( analogPin1, INPUT );
-  
+  pinMode( analogPin2, INPUT );
+  pinMode( analogPin3, INPUT );
+  pinMode( analogPin4, INPUT );
+  pinMode( analogPin5, INPUT );
+  pinMode( analogPin6, INPUT );
+  pinMode( analogPin7, INPUT );
+  pinMode( analogPin8, INPUT );
+
   // Setup I2C
   Wire.begin( SLAVE_ADDRESS );
   Wire.onRequest( sendData );
@@ -84,53 +78,47 @@ void setup()
 int lastState;
 void loop()
 {
-  updateDigitalButton( &button1, buttonPin1 );
-  updateDigitalButton( &button2, buttonPin2 );
-/*
-  updateDigitalButton( &button3, buttonPin1 );
-  updateDigitalButton( &button4, buttonPin2 );
-  updateDigitalButton( &button5, buttonPin1 );
-  updateDigitalButton( &button6, buttonPin2 );
-  updateDigitalButton( &button7, buttonPin1 );
-  updateDigitalButton( &button8, buttonPin2 );
-*/
-  updateInvAnalogButton( &analog1, analogPin1, 700 );
-  //Serial.println( analogRead( analogPin1 ) );
+  updateInvAnalogButton( &analog1, analogPin1, threshold );
+  updateInvAnalogButton( &analog2, analogPin2, threshold );
+  updateInvAnalogButton( &analog3, analogPin3, threshold );
+  updateInvAnalogButton( &analog4, analogPin4, threshold );
+  updateInvAnalogButton( &analog5, analogPin5, threshold );
+  updateInvAnalogButton( &analog6, analogPin6, threshold );
+  updateInvAnalogButton( &analog7, analogPin7, threshold );
+  updateInvAnalogButton( &analog8, analogPin8, threshold );
   
-  if( analog1.Pressed || button1.Pressed )
+  if( analog1.Pressed )
   {
     keyState |= NOTE_1;
   }
-  if( button2.Pressed )
+  if( analog2.Pressed )
   {
     keyState |= NOTE_2;
   }
-/*
-  if( button3.Pressed )
+  if( analog3.Pressed )
   {
     keyState |= NOTE_3;
   }
-  if( button4.Pressed )
+  if( analog4.Pressed )
   {
     keyState |= NOTE_4;
   }
-  if( button5.Pressed )
+  if( analog5.Pressed )
   {
     keyState |= NOTE_5;
   }
-  if( button6.Pressed )
+  if( analog6.Pressed )
   {
     keyState |= NOTE_6;
   }
-  if( button7.Pressed )
+  if( analog7.Pressed )
   {
     keyState |= NOTE_7;
   }
-  if( button8.Pressed )
+  if( analog8.Pressed )
   {
     keyState |= NOTE_8;
   }
-*/
 }
 
 // Send data to the RPi over the Wire protocol (I2C)

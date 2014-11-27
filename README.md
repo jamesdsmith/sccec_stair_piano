@@ -8,7 +8,7 @@ The project is intended to be installed on a staircase. Laser modules will shoot
 A Raspberry Pi will communicate with the Arduino over I2C, and will periodically ask the Arduino for the state variable. Reading this state variable will allow the RPi to determine which lasers are blocked, and will play the appropriate sound.
 
 #### Schematic
-*coming soon*
+![Stair Piano Schematic](/docs/schematic_bb.png?raw=true "Stair Piano Schematic")
 
 ### Requirements:
 * Arduino Mega 2560
