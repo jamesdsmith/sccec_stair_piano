@@ -78,12 +78,19 @@ int main( int argc, char* args[] )
 	}
 	if( !initSDL() )
 	{
+		printf( "Error initializing SDL\n" );
 		exit(1);
 	}
 
 	// Load sound files
-	sounds[0] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/a.wav" );
-	sounds[1] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/b.wav" );
+	sounds[0] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/C2.wav" );
+	sounds[1] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/D2.wav" );
+	sounds[2] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/E2.wav" );
+	sounds[3] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/F2.wav" );
+	sounds[4] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/G2.wav" );
+	sounds[5] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/A2.wav" );
+	sounds[6] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/B2.wav" );
+	sounds[7] = Mix_LoadWAV( "/home/pi/Projects/sccec_stair_piano/sounds/C3.wav" );
 
 	for( int i = 0; i < SOUNDS; ++i )
 	{
@@ -106,6 +113,10 @@ int main( int argc, char* args[] )
 		if( read( i2c, data, 1 ) == 1 )
 		{
 			char state = data[0];
+			if( state != 0 )
+			{
+				//printf( "%d\n", state );
+			}
 			for( int i = 0; i < 8; ++i )
 			{
 				if( state & 0x01 )
